@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Currency Data Grid</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Currency Data Grid</h1>
+            <p>Click column headers to sort</p>
+        </div>
+        
+        <div class="table-container">
+            <table id="currencyTable">
+                <thead>
+                    <tr>
+                        <th class="sortable" data-column="currency" data-type="string">Currency</th>
+                        <th class="sortable" data-column="amount" data-type="number">Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            Sortable Currency Data Grid demo • Global Blue's User Story 2
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
