@@ -5,20 +5,31 @@ const currencyData = [
     { "currency": "EUR", "amount": 5388.00 }
   ];
 
+//map each currency to its locale, to allow correct amount formatting
+const currencyLocaleMap = {
+    AUD: 'en-AU', //Australia
+    MYR: 'ms-MY', //Malaysia
+    GBP: 'en-GB', //UK
+    EUR: 'de-DE'  //Germany
+};
+
 let currentSort = { column: null, direction: null };
 
-
-//this function renders the table
 function renderTable(data) {
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
 
     data.forEach(row => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td class="currency">${row.currency}</td>
-            <td class="amount">${row.amount}</td>
-        `;
+
+        //format amount with its respective locale, but without currency unit
+        const locale = currencyLocaleMap[row.currency] || 'en-US';
+        const formattedAmount = new Intl.NumberFormat(locale, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(row.amount);
+
+        tr.innerHTML = `<td class="currency">${row.currency}</td><td class="amount">${formattedAmount}</td>`;
         tbody.appendChild(tr);
     });
 }
@@ -34,22 +45,22 @@ function sortData(column, type) {
     }
 
     //sort based on column type
-    sortedData.sort((a, b) => {
-        let aVal = a[column];
-        let bVal = b[column];
+    sortedData.sort((a, b) => { //sort() comparison
+        let valueA = a[column];
+        let valueB = b[column];
 
-        if (type === 'number') {
-            aVal = parseFloat(aVal);
-            bVal = parseFloat(bVal);
+        if (type === 'number') { //differentiate num vs string
+            valueA = parseFloat(valueA);
+            valueB = parseFloat(valueB);
         } else {
-            aVal = aVal.toString().toLowerCase();
-            bVal = bVal.toString().toLowerCase();
+            valueA = valueA.toString().toLowerCase();
+            valueB = valueB.toString().toLowerCase();
         }
 
         if (direction === 'asc') {
-            return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+            return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
         } else {
-            return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+           return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
         }
     });
 
@@ -82,7 +93,7 @@ function init() {
     //render initial unsorted table
     renderTable(currencyData);
 
-    //click listeners for sortable headers
+    //click listeners to sort column
     document.querySelectorAll('th.sortable').forEach(header => {
         header.addEventListener('click', () => {
             const column = header.getAttribute('data-column');
