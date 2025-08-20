@@ -7,13 +7,14 @@
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
+    background-color: #f0f0f0;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    background: #fff;
-    border: 1px solid #000;
+    background: #e6e6e6; /* table container light grey */
+    border: 1px solid #ccc;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -27,17 +28,26 @@ body {
     margin-bottom: 5px;
 }
 
+.header p {
+    font-style: italic;  
+    font-size: 12px;    
+    opacity: 0.8;        
+    margin-top: 5px;      /* optional spacing */
+}
+
 .table-container {
     padding: 10px;
 }
 
+/* table bg */
 table {
     width: 100%;
     border-collapse: collapse;
+    background-color: #f9f9f9;
 }
 
 th, td {
-    border: 1px solid #000;
+    border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
 }
@@ -46,18 +56,37 @@ th.sortable {
     cursor: pointer;
 }
 
+/* show sort arrows in column headers */
+th.sortable {
+    cursor: pointer;
+    position: relative;
+    padding-right: 20px; 
+}
+
+th.sortable::after {
+    content: '↕';
+    position: absolute;
+    right: 8px;
+    color: #666;
+}
+
+th.sort-asc::after {
+    content: '↑';
+    color: #000;
+}
+
+th.sort-desc::after {
+    content: '↓';
+    color: #000;
+}
+
 .amount {
     text-align: right;
 }
 
+/* Hover effect for rows */
 tr:hover {
-    background-color: #dcdcdc; /* slightly darker gray on hover */
-}
-
-.footer {
-    padding: 10px;
-    text-align: center;
-    font-size: 12px;
+    background-color: #dcdcdc; /* slightly darker grey on hover */
 }
 
 @media (max-width: 600px) {
@@ -73,4 +102,10 @@ tr:hover {
     .header, .table-container {
         padding: 8px;
     }
+}
+
+.footer {
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
 }
