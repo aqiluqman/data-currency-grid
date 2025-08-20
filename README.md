@@ -21,6 +21,7 @@ data-currency-grid/
   - Currency column: Alphabetical sorting (string)
   - Amount column: Numerical sorting (number)
 - **Toggle Sort Direction**: Click same column to reverse order
+- **Each currency displays their own locality format**:
 - **No Dependencies**: Just JavaScript, HTML, and CSS
 
 ## 🛠️ Stack Used
@@ -55,6 +56,7 @@ data-currency-grid/
 4. **Reverse Order**: Click the same respective column header again to reverse sort
 
 ### Data Structure
+Populate currencyData array with object of currency and amount
 ```javascript
 const currencyData = [
     { currency: 'AUD', amount: 1100.00 },
@@ -63,12 +65,20 @@ const currencyData = [
     { currency: 'EUR', amount: 5388.00 }
 ];
 ```
+An object mapping each currency to its respective locale to display correct number formatting.
+```javascript
+const currencyLocaleMap = {
+    AUD: 'en-AU', 
+    MYR: 'ms-MY', 
+    GBP: 'en-GB', 
+    EUR: 'de-DE'  
+};
+```
 
 ### Sort Algorithm
+Uses JavaScript's _sort()_ with ES6 comparison function
 - **String sorting**: Case-insensitive comparison for sorting
 - **Number sorting**: Compares numerical value and sort DESC and ASC
-
--
 
 _Note: This project is built for submission of Global Blue's Assessment for User Story 2_
 
